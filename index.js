@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const { mapping } = require('./mapping');
 const { getJsonContent, mapResponse } = require('./functions');
+const getHistoricalData = require('./src/getHistoricalData')
 
 const validPeriod = ['P1D', 'P1W', 'P1M', 'P3M', 'P6M', 'P1Y', 'P5Y', 'MAX'];
 const validInterval = ['PT1M', 'PT5M', 'PT15M', 'PT30M', 'PT1H', 'PT5H', 'P1D', 'P1W', 'P1M'];
@@ -83,4 +84,7 @@ async function investing(input, period = 'P1M', interval = 'P1D', pointscount = 
 
 // investing('1').then(console.log);
 
-exports.investing = investing;
+module.exports = {
+  investing,
+  getHistoricalData
+}

@@ -13,4 +13,18 @@ declare module "investing-com-api" {
     price_low: number,
     price_close: number,
   }[]>;
+
+  export function getHistoricalData(
+    input: string,
+    resolution: '5' | '60' | 'D' | 'W' | 'M',
+    from: Date,
+    to: Date
+  ): Promise<{
+    date: number,
+    value: number,
+    price_open: number,
+    price_high: number,
+    price_low: number,
+    price_close: number,
+  }[]>;
 }
