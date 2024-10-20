@@ -16,6 +16,22 @@ describe('Tests for getHistoricalData()', () => {
       await expect(getHistoricalData()).resolves.toBeInstanceOf(Array)
     })
 
+    it('should throw an error if investing.com API doesn\'t respond with a 200', async () => {
+        scope
+        .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
+        .query(true)
+        .reply(403)
+        await expect(getHistoricalData()).rejects.toThrow()
+    })
+
+    it('should throw an error if investing.com API responds with a 200 and not "ok" in body', async () => {
+        scope
+        .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
+        .query(true)
+        .reply(200, { s: 'error' })
+        await expect(getHistoricalData()).rejects.toThrow()
+    })
+
     it('should call investing.com history api', async () => {
       scope
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
