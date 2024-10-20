@@ -17,13 +17,12 @@ const getHistoricalData = async (params) => {
         })
       });
     
-    // TODO da testare
     if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
     }
     
     const json = await response.json();
-    // TODO da testare
+
     if (json.s != "ok") {
         throw new Error(json.s);
     }

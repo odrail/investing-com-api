@@ -75,7 +75,6 @@ async function investing(input, period = 'P1M', interval = 'P1D', pointscount = 
     }
     return results;
   } catch (err) {
-    console.error(err.message);
     if (err.response?.data?.['@errors']?.[0]) {
       console.error(err.response.data['@errors'][0]);
     }
