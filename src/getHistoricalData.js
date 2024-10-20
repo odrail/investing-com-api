@@ -31,7 +31,7 @@ const getHistoricalData = async (params) => {
     if (Array.isArray(json.t)) {
         for (let index = 0; index < json.t.length; index++) {
             array.push([
-                json.t[index],
+                json.t[index] * 1000,
                 json.o[index],
                 json.h[index],
                 json.l[index],
