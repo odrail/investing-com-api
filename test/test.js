@@ -11,7 +11,6 @@ const mockData = [
 ];
 
 describe('Tests for Investing.com unofficial APIs', () => {
-
   it('should map an array of arrays to array of objects', () => {
     const mappedResponse = mapResponse(mockData);
     const expected = [
@@ -80,5 +79,4 @@ describe('Tests for Investing.com unofficial APIs', () => {
     const response = await investing('currencies/eur-usd', 'P1M', 'P1D', 20);
     assert.strictEqual(response, undefined);
   });
-
 });

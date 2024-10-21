@@ -38,12 +38,12 @@ function checkParams(input, period, interval, pointscount) {
  * @return {Promise<Array>} An array of arrays with date (timestamp) and values (number) properties
  */
 async function callInvesting(pairId, period, interval, pointscount) {
-  const url = `https://api.investing.com/api/financialdata/${pairId}/historical/chart?period=${period}&interval=${interval}&pointscount=${pointscount}`
+  const url = `https://api.investing.com/api/financialdata/${pairId}/historical/chart?period=${period}&interval=${interval}&pointscount=${pointscount}`;
 
   const response = await fetch(url, {
     headers: new Headers({
-      "upgrade-insecure-requests": "1"
-    })
+      'upgrade-insecure-requests': '1',
+    }),
   });
 
   if (!response.ok) {
@@ -51,7 +51,7 @@ async function callInvesting(pairId, period, interval, pointscount) {
   }
 
   const json = await response.json();
-  return json.data
+  return json.data;
 }
 
 /**

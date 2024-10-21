@@ -14,5 +14,5 @@ const mapResponse = (array = []) => array.map((item) => ({
 }));
 
 module.exports = {
-  mapResponse
+  mapResponse,
 };
