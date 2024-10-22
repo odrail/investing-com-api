@@ -28,19 +28,21 @@ async function main() {
 [
   {
     date: 1659398400000,
-    value: 1.0264,
+    value: 1.0157,
     price_open: 1.0264,
     price_high: 1.0294,
     price_low: 1.0155,
-    price_close: 1.0157
+    price_close: 1.0157,
+    volume: 10
   },
   {
     date: 1659484800000,
-    value: 1.0158,
+    value: 1.0136,
     price_open: 1.0158,
     price_high: 1.0209,
     price_low: 1.0126,
-    price_close: 1.0136
+    price_close: 1.0136,
+    volume: 15
   },
   ...
 ]
