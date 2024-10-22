@@ -38,7 +38,12 @@ function checkParams(input, period, interval, pointscount) {
  * @return {Promise<Array>} An array of arrays with date (timestamp) and values (number) properties
  */
 async function callInvesting(pairId, period, interval, pointscount) {
-  const url = `https://api.investing.com/api/financialdata/${pairId}/historical/chart?period=${period}&interval=${interval}&pointscount=${pointscount}`;
+  const query = new URLSearchParams({
+    period,
+    interval,
+    pointscount,
+  });
+  const url = `https://api.investing.com/api/financialdata/${pairId}/historical/chart?${query}`;
 
   const response = await fetch(url, {
     headers: new Headers({
