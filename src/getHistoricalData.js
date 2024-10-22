@@ -35,7 +35,8 @@ const getHistoricalData = async (params) => {
                 json.o[index],
                 json.h[index],
                 json.l[index],
-                json.c[index]
+                json.c[index],
+                json.v[index]
             ])
         }
     }
