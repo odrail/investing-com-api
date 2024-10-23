@@ -1,8 +1,9 @@
 const { mapResponse } = require('../functions');
+const { getPairId } = require('../mapping');
 
 const buildUrl = ({ input, resolution, from, to } = {}) => {
   const query = new URLSearchParams({
-    symbol: input,
+    symbol: getPairId(input),
     resolution,
     from: from && from.getTime() / 1000,
     to: to && to.getTime() / 1000,

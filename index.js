@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { mapping } = require('./mapping');
+const { getPairId } = require('./mapping');
 const { getJsonContent, mapResponse } = require('./functions');
 const getHistoricalData = require('./src/getHistoricalData');
 
@@ -67,7 +67,7 @@ async function callInvesting(pairId, period, interval, pointscount, pptrLaunchOp
 async function investing(input, period = 'P1M', interval = 'P1D', pointscount = 120, pptrLaunchOptions) {
   try {
     checkParams(input, period, interval, pointscount);
-    const pairId = mapping[input]?.pairId || input;
+    const pairId = getPairId(input);
     const resInvesting = await callInvesting(pairId, period, interval, pointscount, pptrLaunchOptions);
     const results = mapResponse(resInvesting);
     if (!results.length) {

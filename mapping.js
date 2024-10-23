@@ -1,4 +1,4 @@
-exports.mapping = {
+const mapping = {
   'currencies/eur-usd': {
     pairId: '1',
     title: 'EUR/USD - Euro US Dollar',
@@ -945,3 +945,5 @@ exports.mapping = {
     name: 'PIMCO Commodity Real Return Strategy Institutional',
   },
 };
+
+exports.getPairId = (input) => mapping[input]?.pairId || input;
