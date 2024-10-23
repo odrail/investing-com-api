@@ -67,10 +67,10 @@ Only input is required, other params are optional.
 #### getHistoricalData API
 Not all parameters are mandatory.
 
-- input String: input string, see mapping.js keys, or provide a valid investing.com pairId. (Required)
-- resolution String: resolution of the response. Default D (1 day). Valid values: 5 (5 minutes), 60 (1 hour), D (1 day), W (week), M (month)
-- from Date: a Date object to indicate the start of the period (Required)
-- to Date: a Date object to indicate the end of the period (Required)
+- **input** String: input string, see mapping.js keys, or provide a valid investing.com pairId. (Required)
+- **resolution** String: resolution of the response. Default D (1 day). Valid values: 5 (5 minutes), 60 (1 hour), D (1 day), W (week), M (month)
+- **from** Date: a Date object to indicate the start of the period (Required)
+- **to** Date: a Date object to indicate the end of the period (Required)
 
 ### Run tests
 `npm test`
