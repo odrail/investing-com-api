@@ -32,6 +32,9 @@
     "url": "https://github.com/odrail/investing-com-api/issues"
   },
   "homepage": "https://github.com/odrail/investing-com-api#readme",
+  "files": [
+    "dist/bundle.min.cjs"
+  ],
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.1",
