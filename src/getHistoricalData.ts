@@ -1,16 +1,17 @@
-const { mapResponse } = require('../functions');
+import { GetHistoricalData } from 'investing-com-api';
+const { mapResponse } = require('./functions');
 
-const buildUrl = ({ input, resolution = 'D', from, to } = {}) => {
+const buildUrl = ({ input, resolution = 'D', from, to }: GetHistoricalData) => {
   const query = new URLSearchParams({
     symbol: input,
     resolution,
-    from: from && Math.round(from.getTime() / 1000),
-    to: to && Math.round(to.getTime() / 1000),
+    from: from && Math.round(from.getTime() / 1000).toString(),
+    to: to && Math.round(to.getTime() / 1000).toString(),
   });
   return 'https://tvc6.investing.com/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history?' + query;
 };
 
-const getHistoricalData = async (params) => {
+const getHistoricalData = async (params: GetHistoricalData) => {
   const response = await fetch(buildUrl(params));
 
   if (!response.ok) {
@@ -40,4 +41,4 @@ const getHistoricalData = async (params) => {
   return mapResponse(array);
 };
 
-module.exports = getHistoricalData;
+export default getHistoricalData;

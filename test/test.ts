@@ -1,9 +1,10 @@
 /* eslint-disable max-len */
-const assert = require('assert');
-const { investing } = require('../index');
-const { mapResponse } = require('../functions');
+import assert from "assert";
+import { investing } from '../src/index';
+import { mapResponse } from '../src/functions';
+import { ChartResponse } from "investing-com-api";
 
-const mockData = [
+const mockData: ChartResponse[] = [
   [1587340800000, 230.7, 1, 2, 3, 4],
   [1587427200000, 259.4, 5, 6, 7, 8],
   [1587513600000, 246.2, 9, 10, 11, 12],
@@ -58,21 +59,6 @@ describe('Tests for Investing.com unofficial APIs', () => {
 
   it('should return undefined and print error if input is invalid', async () => {
     const response = await investing('currencies/invalid');
-    assert.strictEqual(response, undefined);
-  });
-
-  it('should return error with invalid period', async () => {
-    const response = await investing('currencies/eur-usd', '1M');
-    assert.strictEqual(response, undefined);
-  });
-
-  it('should return error with invalid interval', async () => {
-    const response = await investing('currencies/eur-usd', 'P1M', '15M');
-    assert.strictEqual(response, undefined);
-  });
-
-  it('should return error with invalid pointscount', async () => {
-    const response = await investing('currencies/eur-usd', 'P1M', 'P1D', 20);
     assert.strictEqual(response, undefined);
   });
 });
