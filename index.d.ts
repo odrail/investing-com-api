@@ -1,7 +1,6 @@
 declare module "investing-com-api" {
   interface InvestmentData {
     date: number;
-    value: number;
     price_open: number;
     price_high: number;
     price_low: number;
@@ -20,21 +19,37 @@ declare module "investing-com-api" {
   export type Interval = 'PT1M' | 'PT5M' | 'PT15M' | 'PT30M' | 'PT1H' | 'PT5H' | 'P1D' | 'P1W' | 'P1M'
   export type PointsCount = 60 | 70 | 120
   export type ChartResponse = [number, number, number, number, number, number]
+
+  // Structure of a single data point response
+  export interface HistoricalDataPoint {
+    date: number;        // Timestamp of the data point
+    price_open: number;  // Opening price
+    price_high: number;  // Highest price during the period
+    price_low: number;   // Lowest price during the period
+    price_close: number; // Closing price
+  }
+
+  // Structure of the response for historical data
+  export type HistoricalDataResponse = HistoricalDataPoint[];
+
+  /**
+   * Fetches historical data for a specified trading pair.
+   * 
+   * @param input - The trading pair identifier.
+   * @param period - The period for which to fetch the data (optional).
+   * @param interval - The time interval for the data points (optional).
+   * @param pointscount - The number of data points to retrieve (optional).
+   * @param pptrLaunchOptions - Options for launching Puppeteer (optional).
+   * @returns A promise that resolves to an array of historical data points.
+   */
   export function investing(
     input: string,
     period?: Period,
     interval?: Interval,
     pointscount?: PointsCount,
-  ): Promise<{
-    date: number,
-    value: number,
-    price_open: number,
-    price_high: number,
-    price_low: number,
-    price_close: number,
-  }[]>;
+  ): Promise<HistoricalDataResponse>;
 
   export function getHistoricalData(
     params: GetHistoricalData
-  ): Promise<InvestmentData[]>;
+  ): Promise<HistoricalDataResponse[]>;
 }
