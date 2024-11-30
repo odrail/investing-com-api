@@ -1,6 +1,6 @@
 {
   "name": "investing-com-api",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "description": "Unofficial APIs for Investing.com website.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DavideViolante/investing-com-api.git"
+    "url": "git+https://github.com/odrail/investing-com-api.git"
   },
   "keywords": [
     "investing",
@@ -27,9 +27,9 @@
   "author": "Davide Violante",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DavideViolante/investing-com-api/issues"
+    "url": "https://github.com/odrail/investing-com-api/issues"
   },
-  "homepage": "https://github.com/DavideViolante/investing-com-api#readme",
+  "homepage": "https://github.com/odrail/investing-com-api#readme",
   "jest": {
     "coveragePathIgnorePatterns": ["functions.js"]
   },
