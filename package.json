@@ -31,15 +31,13 @@
   },
   "homepage": "https://github.com/odrail/investing-com-api#readme",
   "jest": {
-    "coveragePathIgnorePatterns": ["functions.js"]
-  },
-  "dependencies": {
-    "puppeteer": "^22.15.0"
+    "coveragePathIgnorePatterns": [
+      "functions.js"
+    ]
   },
   "devDependencies": {
     "eslint": "^8.57.1",
     "eslint-config-google": "^0.14.0",
-    "jest": "^29.7.0",
-    "jest-puppeteer": "^10.1.2"
+    "jest": "^29.7.0"
   }
 }
