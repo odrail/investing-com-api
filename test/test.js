@@ -20,7 +20,6 @@ describe('Tests for Investing.com unofficial APIs', () => {
         price_high: mockData[0][2],
         price_low: mockData[0][3],
         price_close: mockData[0][4],
-        value: mockData[0][4],
         volume: mockData[0][5],
       },
       {
@@ -29,7 +28,6 @@ describe('Tests for Investing.com unofficial APIs', () => {
         price_high: mockData[1][2],
         price_low: mockData[1][3],
         price_close: mockData[1][4],
-        value: mockData[1][4],
         volume: mockData[1][5],
       },
       {
@@ -38,7 +36,6 @@ describe('Tests for Investing.com unofficial APIs', () => {
         price_high: mockData[2][2],
         price_low: mockData[2][3],
         price_close: mockData[2][4],
-        value: mockData[2][4],
         volume: mockData[2][5],
       },
       {
@@ -47,7 +44,6 @@ describe('Tests for Investing.com unofficial APIs', () => {
         price_high: mockData[3][2],
         price_low: mockData[3][3],
         price_close: mockData[3][4],
-        value: mockData[3][4],
         volume: mockData[3][5],
       },
     ];

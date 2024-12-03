@@ -9,7 +9,6 @@ const mapResponse = (array = []) => array.map((item) => ({
   price_high: item[2],
   price_low: item[3],
   price_close: item[4],
-  value: item[4],
   volume: item[5],
 }));
 
