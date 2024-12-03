@@ -10,13 +10,19 @@ Unofficial APIs for Investing.com website.
 
 ### Example
 ```js
-const { investing } = require('investing-com-api');
+const { investing, getHistoricalData } = require('investing-com-api');
 
 async function main() {
   try {
     const response1 = await investing('currencies/eur-usd'); // Providing a valid mapping.js key
     const response2 = await investing('currencies/eur-usd', 'P1M', 'P1D'); // With optional params
     const response3 = await investing('1'); // Providing the pairId directly, even if not present in mapping.js
+    const response4 = await getHistoricalData({
+      input: '1',
+      resolution: 'D',
+      from: new Date('2024-10-15T00:00:00.000Z'),
+      to: new Date('2024-10-22T00:00:00.000Z'),
+    })
   } catch (err) {
     console.error(err);
   }
@@ -50,11 +56,20 @@ async function main() {
 
 
 ### Inputs
+#### investing API
 Only input is required, other params are optional.
 - **input** _String_: input string, see [mapping.js](https://github.com/DavideViolante/investing-com-api/blob/master/mapping.js) keys, or provide a valid investing.com pairId. (Required)
 - **period** _String_: Period of time, window size. Default P1M (1 month). Valid values: P1D, P1W, P1M, P3M, P6M, P1Y, P5Y, MAX.
 - **interval** _Number_: Interval between results. Default P1D (1 day). Valid values: PT1M, PT5M, PT15M, PT30M, PT1H, PT5H, P1D, P1W, P1M.
 - **pointscount** _Number_: number of total results. Valid values seems to be 60, 70 or 120.
+
+#### getHistoricalData API
+Not all parameters are mandatory.
+
+- **input** String: input string, see mapping.js keys, or provide a valid investing.com pairId. (Required)
+- **resolution** String: resolution of the response. Default D (1 day). Valid values: 5 (5 minutes), 60 (1 hour), D (1 day), W (week), M (month)
+- **from** Date: a Date object to indicate the start of the period (Required)
+- **to** Date: a Date object to indicate the end of the period (Required)
 
 ### Run tests
 `npm test`
