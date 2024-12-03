@@ -1,4 +1,3 @@
-const { mapping } = require('./mapping');
 const { mapResponse } = require('./functions');
 
 const validPeriod = ['P1D', 'P1W', 'P1M', 'P3M', 'P6M', 'P1Y', 'P5Y', 'MAX'];
@@ -61,7 +60,7 @@ async function callInvesting(pairId, period, interval, pointscount) {
 
 /**
  * Investing
- * @param {string} input Input string, see mapping.js keys, or provide a valid investing.com pairId
+ * @param {string} pairId Input string, see mapping.js keys, or provide a valid investing.com pairId
  * @param {string} [period] Period of time, window size. Default P1M (1 month)
  *                        Valid values: P1D, P1W, P1M, P3M, P6M, P1Y, P5Y, MAX
  * @param {string} [interval] Interval between results. Default P1D (1 day)
@@ -70,10 +69,9 @@ async function callInvesting(pairId, period, interval, pointscount) {
  *                             Valid values: 60, 70, 120
  * @return {Promise<Array>} An array of objects with date (timestamp), value (number) and other (number) properties
  */
-async function investing(input, period = 'P1M', interval = 'P1D', pointscount = 120) {
+async function investing(pairId, period = 'P1M', interval = 'P1D', pointscount = 120) {
   try {
-    checkParams(input, period, interval, pointscount);
-    const pairId = mapping[input]?.pairId || input;
+    checkParams(pairId, period, interval, pointscount);
     const resInvesting = await callInvesting(pairId, period, interval, pointscount);
     const results = mapResponse(resInvesting);
     if (!results.length) {
