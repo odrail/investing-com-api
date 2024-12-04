@@ -1,6 +1,6 @@
 declare module "investing-com-api" {
 
-  interface GetHistoricalData {
+  export interface GetHistoricalDataParams {
     input: string,
     resolution?: '5' | '60' | 'D' | 'W' | 'M',
     from: Date,
@@ -12,6 +12,7 @@ declare module "investing-com-api" {
   export type Interval = 'PT1M' | 'PT5M' | 'PT15M' | 'PT30M' | 'PT1H' | 'PT5H' | 'P1D' | 'P1W' | 'P1M'
   export type PointsCount = 60 | 70 | 120
   export type ChartResponse = [number, number, number, number, number, number]
+  export type GetHistoricalDataFn = (params: GetHistoricalDataParams) => Promise<InvestmentData[]>
 
   // Structure of a single data point response
   export interface InvestmentData {
@@ -21,6 +22,21 @@ declare module "investing-com-api" {
     price_low: number;   // Lowest price during the period
     price_close: number; // Closing price
   }
+
+  export type GetHistoricalDataResponse = 
+    | {
+      s: "ok"
+      t: number[]
+      o: number[]
+      h: number[]
+      l: number[]
+      c: number[]
+      v: number[]
+      vac: number[]
+      vo: number[]
+  } 
+  | { s: "no_data", nextTime: number }
+  | string[]
 
   /**
    * Fetches historical data for a specified trading pair.
@@ -40,6 +56,6 @@ declare module "investing-com-api" {
   ): Promise<InvestmentData>;
 
   export function getHistoricalData(
-    params: GetHistoricalData
+    params: GetHistoricalDataParams
   ): Promise<InvestmentData[]>;
 }

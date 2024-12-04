@@ -1,5 +1,9 @@
-import { Interval, InvestmentData, PairId, Period, PointsCount } from 'investing-com-api';
+import { ChartResponse, Interval, InvestmentData, PairId, Period, PointsCount } from 'investing-com-api';
 import mapResponse from './mapResponse';
+
+type HistoricalChartResponse = {
+  data: ChartResponse[]
+}
 
 const validPeriod = ['P1D', 'P1W', 'P1M', 'P3M', 'P6M', 'P1Y', 'P5Y', 'MAX'];
 const validInterval = ['PT1M', 'PT5M', 'PT15M', 'PT30M', 'PT1H', 'PT5H', 'P1D', 'P1W', 'P1M'];
@@ -35,9 +39,9 @@ function checkParams(input: string, period: Period, interval: Interval, pointsco
  * @param {string} interval Interval between results.
  *                          Valid values: PT1M, PT5M, PT15M, PT30M, PT1H, PT5H, P1D, P1W, P1M
  * @param {number} pointscount Number of results returned. Valid values: 60, 70, 120
- * @return {Promise<Array>} An array of arrays with date (timestamp) and values (number) properties
+ * @return {Promise<ChartResponse[]>} An array of arrays with date (timestamp) and values (number) properties
  */
-async function callInvesting(pairId: PairId, period: Period, interval: Interval, pointscount: PointsCount) {
+async function callInvesting(pairId: PairId, period: Period, interval: Interval, pointscount: PointsCount): Promise<ChartResponse[]> {
   const query = new URLSearchParams({
     period,
     interval,
@@ -55,7 +59,7 @@ async function callInvesting(pairId: PairId, period: Period, interval: Interval,
     throw new Error(`Response status: ${response.status}`);
   }
 
-  const json = await response.json();
+  const json: HistoricalChartResponse = await response.json();
   return json.data;
 }
 
@@ -72,21 +76,13 @@ async function callInvesting(pairId: PairId, period: Period, interval: Interval,
  */
 
 const investing = async(pairId?: string, period: Period = 'P1M', interval: Interval = 'P1D', pointscount: PointsCount = 120): Promise<InvestmentData[]> => {
-  try {
-    checkParams(pairId, period, interval, pointscount);
-    const resInvesting = await callInvesting(pairId, period, interval, pointscount);
-    const results = mapResponse(resInvesting);
-    if (!results.length) {
-      throw Error('Wrong input or pairId');
-    }
-    return results;
-  } catch (err) {
-    // FIXME manage errors better
-    console.error(err.message);
-    if (err.response?.data?.['@errors']?.[0]) {
-      console.error(err.response.data['@errors'][0]);
-    }
+  checkParams(pairId, period, interval, pointscount);
+  const resInvesting = await callInvesting(pairId, period, interval, pointscount);
+  const results = mapResponse(resInvesting);
+  if (!results.length) {
+    throw Error('Wrong input or pairId');
   }
+  return results;
 }
 
 export default investing

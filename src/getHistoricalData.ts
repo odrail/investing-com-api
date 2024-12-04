@@ -1,7 +1,7 @@
-import { ChartResponse, GetHistoricalData } from 'investing-com-api';
+import { ChartResponse, GetHistoricalDataFn, GetHistoricalDataParams, GetHistoricalDataResponse, InvestmentData } from 'investing-com-api';
 import mapResponse from './mapResponse';
 
-const buildUrl = ({ input, resolution = 'D', from, to }: GetHistoricalData) => {
+const buildUrl = ({ input, resolution = 'D', from, to }: GetHistoricalDataParams): string => {
   const query = new URLSearchParams({
     symbol: input,
     resolution,
@@ -11,32 +11,33 @@ const buildUrl = ({ input, resolution = 'D', from, to }: GetHistoricalData) => {
   return 'https://tvc6.investing.com/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history?' + query;
 };
 
-const getHistoricalData = async (params: GetHistoricalData) => {
+const getHistoricalData: GetHistoricalDataFn = async (params) => {
   const response = await fetch(buildUrl(params));
 
   if (!response.ok) {
     throw new Error(`Response status: ${response.status}`);
   }
 
-  const json = await response.json();
+  const json: GetHistoricalDataResponse = await response.json();
+
+  if (Array.isArray(json)) {
+    throw new Error(json.join('-'))
+  }
 
   if (json.s != 'ok') {
     throw new Error(json.s);
   }
 
-  const array: ChartResponse[] = [];
-  if (Array.isArray(json.t)) {
-    for (let index = 0; index < json.t.length; index++) {
-      array.push([
-        json.t[index] * 1000,
-        json.o[index],
-        json.h[index],
-        json.l[index],
-        json.c[index],
-        json.v[index],
-      ]);
-    }
-  }
+  const array: ChartResponse[] = json.t.map((_, index) => {
+    return [
+      json.t[index] * 1000,
+      json.o[index],
+      json.h[index],
+      json.l[index],
+      json.c[index],
+      json.v[index],
+    ]
+  })
 
   return mapResponse(array);
 };

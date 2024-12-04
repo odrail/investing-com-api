@@ -1,9 +1,5 @@
-// import { getHistoricalData } from "investing-com-api";
-
 import getHistoricalData from "../src/getHistoricalData";
-
-const nock = require('nock');
-// const { getHistoricalData } = require('../index');
+import nock from 'nock'
 
 describe('Tests for getHistoricalData()', () => {
   const scope = nock('https://tvc6.investing.com');
@@ -16,13 +12,13 @@ describe('Tests for getHistoricalData()', () => {
     scope
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query(true)
-        .reply(200, { s: 'ok' });
+        .reply(200, { s: 'ok', t: [] });
     await expect(getHistoricalData({
       input: '1',
       resolution: 'D',
       from: new Date(1729123200000),
       to: new Date(1729209600000),
-    })).resolves.toBeInstanceOf(Array);
+    })).resolves.toEqual([]);
   });
 
   it('should throw an error if investing.com API doesn\'t respond with a 200', async () => {
@@ -55,7 +51,7 @@ describe('Tests for getHistoricalData()', () => {
     scope
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query(true)
-        .reply(200, { s: 'ok' });
+        .reply(200, { s: 'ok', t: [] });
     await getHistoricalData({
       input: '1',
       resolution: 'D',
