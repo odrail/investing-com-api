@@ -1,5 +1,5 @@
-const nock = require('nock');
-const { getHistoricalData } = require('../index');
+import getHistoricalData from "../src/getHistoricalData";
+import nock from 'nock'
 
 describe('Tests for getHistoricalData()', () => {
   const scope = nock('https://tvc6.investing.com');
@@ -12,8 +12,13 @@ describe('Tests for getHistoricalData()', () => {
     scope
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query(true)
-        .reply(200, { s: 'ok' });
-    await expect(getHistoricalData()).resolves.toBeInstanceOf(Array);
+        .reply(200, { s: 'ok', t: [] });
+    await expect(getHistoricalData({
+      input: '1',
+      resolution: 'D',
+      from: new Date(1729123200000),
+      to: new Date(1729209600000),
+    })).resolves.toEqual([]);
   });
 
   it('should throw an error if investing.com API doesn\'t respond with a 200', async () => {
@@ -21,22 +26,45 @@ describe('Tests for getHistoricalData()', () => {
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query(true)
         .reply(403);
-    await expect(getHistoricalData()).rejects.toThrow();
+    await expect(getHistoricalData({
+      input: '1',
+      resolution: 'D',
+      from: new Date(1729123200000),
+      to: new Date(1729209600000),
+    })).rejects.toEqual('Response status: 403');
   });
 
-  it('should throw an error if investing.com API responds with a 200 and not "ok" in body', async () => {
+  it('should throw an error if investing.com API responds with a 200 but some fields are not valid', async () => {
     scope
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query(true)
-        .reply(200, { s: 'error' });
-    await expect(getHistoricalData()).rejects.toThrow();
+        .reply(200, [ 'to field is required', 'to field must be an integer' ] );
+    await expect(getHistoricalData({
+      input: '1',
+      resolution: 'D',
+      from: new Date(1729123200000),
+      to: new Date(1729209600000),
+    })).rejects.toEqual(["to field is required", "to field must be an integer"]);
+  });
+
+  it('should throw an error if investing.com API responds with a 200 but some fields are not valid', async () => {
+    scope
+        .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
+        .query(true)
+        .reply(200, { s: 'no_data', nextTime: 0 } );
+    await expect(getHistoricalData({
+      input: '1',
+      resolution: 'D',
+      from: new Date(1729123200000),
+      to: new Date(1729209600000),
+    })).rejects.toEqual({"nextTime": 0, "s": "no_data"});
   });
 
   it('should call investing.com history api', async () => {
     scope
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query(true)
-        .reply(200, { s: 'ok' });
+        .reply(200, { s: 'ok', t: [] });
     await getHistoricalData({
       input: '1',
       resolution: 'D',

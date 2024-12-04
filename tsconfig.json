@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "ES6",
+    "target": "ES6",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "paths": {
+      "investing-com-api": ["./index.d.ts"]
+    }
+  },
+  "include": ["./src/**/*", "./test/**/*"]
+}

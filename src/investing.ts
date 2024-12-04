@@ -1,5 +1,9 @@
-const { mapResponse } = require('./functions');
-const getHistoricalData = require('./src/getHistoricalData');
+import { ChartResponse, Interval, InvestmentData, PairId, Period, PointsCount } from 'investing-com-api';
+import mapResponse from './mapResponse';
+
+type HistoricalChartResponse = {
+  data: ChartResponse[]
+}
 
 const validPeriod = ['P1D', 'P1W', 'P1M', 'P3M', 'P6M', 'P1Y', 'P5Y', 'MAX'];
 const validInterval = ['PT1M', 'PT5M', 'PT15M', 'PT30M', 'PT1H', 'PT5H', 'P1D', 'P1W', 'P1M'];
@@ -12,7 +16,7 @@ const validPointscount = [60, 70, 120];
  * @param {String} interval interval
  * @param {Number} pointscount pointscount
  */
-function checkParams(input, period, interval, pointscount) {
+function checkParams(input: string, period: Period, interval: Interval, pointscount: PointsCount) {
   if (!input) {
     throw Error('Parameter input is required');
   }
@@ -35,13 +39,13 @@ function checkParams(input, period, interval, pointscount) {
  * @param {string} interval Interval between results.
  *                          Valid values: PT1M, PT5M, PT15M, PT30M, PT1H, PT5H, P1D, P1W, P1M
  * @param {number} pointscount Number of results returned. Valid values: 60, 70, 120
- * @return {Promise<Array>} An array of arrays with date (timestamp) and values (number) properties
+ * @return {Promise<ChartResponse[]>} An array of arrays with date (timestamp) and values (number) properties
  */
-async function callInvesting(pairId, period, interval, pointscount) {
+async function callInvesting(pairId: PairId, period: Period, interval: Interval, pointscount: PointsCount): Promise<ChartResponse[]> {
   const query = new URLSearchParams({
     period,
     interval,
-    pointscount,
+    pointscount: pointscount.toString(),
   });
   const url = `https://api.investing.com/api/financialdata/${pairId}/historical/chart?${query}`;
 
@@ -55,7 +59,7 @@ async function callInvesting(pairId, period, interval, pointscount) {
     throw new Error(`Response status: ${response.status}`);
   }
 
-  const json = await response.json();
+  const json: HistoricalChartResponse = await response.json();
   return json.data;
 }
 
@@ -70,25 +74,15 @@ async function callInvesting(pairId, period, interval, pointscount) {
  *                             Valid values: 60, 70, 120
  * @return {Promise<Array>} An array of objects with date (timestamp), value (number) and other (number) properties
  */
-async function investing(pairId, period = 'P1M', interval = 'P1D', pointscount = 120) {
-  try {
-    checkParams(pairId, period, interval, pointscount);
-    const resInvesting = await callInvesting(pairId, period, interval, pointscount);
-    const results = mapResponse(resInvesting);
-    if (!results.length) {
-      throw Error('Wrong input or pairId');
-    }
-    return results;
-  } catch (err) {
-    if (err.response?.data?.['@errors']?.[0]) {
-      console.error(err.response.data['@errors'][0]);
-    }
+
+const investing = async(pairId?: string, period: Period = 'P1M', interval: Interval = 'P1D', pointscount: PointsCount = 120): Promise<InvestmentData[]> => {
+  checkParams(pairId, period, interval, pointscount);
+  const resInvesting = await callInvesting(pairId, period, interval, pointscount);
+  const results = mapResponse(resInvesting);
+  if (!results.length) {
+    throw Error('Wrong input or pairId');
   }
+  return results;
 }
 
-// investing('1').then(console.log);
-
-module.exports = {
-  investing,
-  getHistoricalData,
-};
+export default investing
