@@ -15,29 +15,23 @@ const getHistoricalData: GetHistoricalDataFn = async (params) => {
   const response = await fetch(buildUrl(params));
 
   if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
+    return Promise.reject(`Response status: ${response.status}`);
   }
 
   const json: GetHistoricalDataResponse = await response.json();
 
-  if (Array.isArray(json)) {
-    throw new Error(json.join('-'))
+  if (Array.isArray(json) || json.s === 'no_data') {
+    return Promise.reject(json)
   }
 
-  if (json.s != 'ok') {
-    throw new Error(json.s);
-  }
-
-  const array: ChartResponse[] = json.t.map((_, index) => {
-    return [
-      json.t[index] * 1000,
-      json.o[index],
-      json.h[index],
-      json.l[index],
-      json.c[index],
-      json.v[index],
-    ]
-  })
+  const array: ChartResponse[] = json.t.map((_, index) => ([
+    json.t[index] * 1000,
+    json.o[index],
+    json.h[index],
+    json.l[index],
+    json.c[index],
+    json.v[index],
+  ]))
 
   return mapResponse(array);
 };
