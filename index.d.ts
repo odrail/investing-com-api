@@ -1,11 +1,4 @@
 declare module "investing-com-api" {
-  interface InvestmentData {
-    date: number;
-    price_open: number;
-    price_high: number;
-    price_low: number;
-    price_close: number;
-  }
 
   interface GetHistoricalData {
     input: string,
@@ -21,16 +14,13 @@ declare module "investing-com-api" {
   export type ChartResponse = [number, number, number, number, number, number]
 
   // Structure of a single data point response
-  export interface HistoricalDataPoint {
+  export interface InvestmentData {
     date: number;        // Timestamp of the data point
     price_open: number;  // Opening price
     price_high: number;  // Highest price during the period
     price_low: number;   // Lowest price during the period
     price_close: number; // Closing price
   }
-
-  // Structure of the response for historical data
-  export type HistoricalDataResponse = HistoricalDataPoint[];
 
   /**
    * Fetches historical data for a specified trading pair.
@@ -47,9 +37,9 @@ declare module "investing-com-api" {
     period?: Period,
     interval?: Interval,
     pointscount?: PointsCount,
-  ): Promise<HistoricalDataResponse>;
+  ): Promise<InvestmentData>;
 
   export function getHistoricalData(
     params: GetHistoricalData
-  ): Promise<HistoricalDataResponse[]>;
+  ): Promise<InvestmentData[]>;
 }

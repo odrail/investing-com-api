@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "lint": "eslint ./src",
-    "test": "jest --forceExit",
-    "coverage": "jest --coverage --forceExit",
+    "test": "jest",
+    "coverage": "jest --coverage",
     "build": "rimraf dist && rollup --config"
   },
   "repository": {

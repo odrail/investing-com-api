@@ -1,6 +1,5 @@
-import { HistoricalDataResponse, Interval, PairId, Period, PointsCount } from 'investing-com-api';
-import getHistoricalData from './getHistoricalData';
-import { mapResponse } from './functions';
+import { Interval, InvestmentData, PairId, Period, PointsCount } from 'investing-com-api';
+import mapResponse from './mapResponse';
 
 const validPeriod = ['P1D', 'P1W', 'P1M', 'P3M', 'P6M', 'P1Y', 'P5Y', 'MAX'];
 const validInterval = ['PT1M', 'PT5M', 'PT15M', 'PT30M', 'PT1H', 'PT5H', 'P1D', 'P1W', 'P1M'];
@@ -72,7 +71,7 @@ async function callInvesting(pairId: PairId, period: Period, interval: Interval,
  * @return {Promise<Array>} An array of objects with date (timestamp), value (number) and other (number) properties
  */
 
-const investing = async(pairId?: string, period: Period = 'P1M', interval: Interval = 'P1D', pointscount: PointsCount = 120): Promise<HistoricalDataResponse> => {
+const investing = async(pairId?: string, period: Period = 'P1M', interval: Interval = 'P1D', pointscount: PointsCount = 120): Promise<InvestmentData[]> => {
   try {
     checkParams(pairId, period, interval, pointscount);
     const resInvesting = await callInvesting(pairId, period, interval, pointscount);
@@ -91,9 +90,3 @@ const investing = async(pairId?: string, period: Period = 'P1M', interval: Inter
 }
 
 export default investing
-export {
-  investing,
-  getHistoricalData,
-};
-
-// investing('1').then(console.log);

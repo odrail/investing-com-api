@@ -1,5 +1,5 @@
-import { GetHistoricalData } from 'investing-com-api';
-const { mapResponse } = require('./functions');
+import { ChartResponse, GetHistoricalData } from 'investing-com-api';
+import mapResponse from './mapResponse';
 
 const buildUrl = ({ input, resolution = 'D', from, to }: GetHistoricalData) => {
   const query = new URLSearchParams({
@@ -24,7 +24,7 @@ const getHistoricalData = async (params: GetHistoricalData) => {
     throw new Error(json.s);
   }
 
-  const array = [];
+  const array: ChartResponse[] = [];
   if (Array.isArray(json.t)) {
     for (let index = 0; index < json.t.length; index++) {
       array.push([

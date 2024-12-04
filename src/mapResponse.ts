@@ -1,4 +1,4 @@
-import { ChartResponse, HistoricalDataResponse } from "investing-com-api";
+import { ChartResponse, InvestmentData } from "investing-com-api";
 
 /**
  * Map the Investing array response
@@ -6,7 +6,7 @@ import { ChartResponse, HistoricalDataResponse } from "investing-com-api";
  * @return {Array} An array of objects with date and value properties
  */
 
-const mapResponse = (array: ChartResponse[]): HistoricalDataResponse => array.map((item) => ({
+export default (array: ChartResponse[]): InvestmentData[] => array.map((item) => ({
   date: item[0],
   price_open: item[1],
   price_high: item[2],
@@ -14,7 +14,3 @@ const mapResponse = (array: ChartResponse[]): HistoricalDataResponse => array.ma
   price_close: item[4],
   volume: item[5],
 }));
-
-export {
-  mapResponse,
-};

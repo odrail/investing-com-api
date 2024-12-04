@@ -1,7 +1,7 @@
+import getHistoricalData from "./getHistoricalData";
 import investing from "./investing";
 
 export {
-    investing
+    investing,
+    getHistoricalData
 }
-
-// investing('1').then(console.log);
