@@ -48,7 +48,7 @@ declare module "investing-com-api" {
    * @param pptrLaunchOptions - Options for launching Puppeteer (optional).
    * @returns A promise that resolves to an array of historical data points.
    */
-  export function investing(
+  export default function investing(
     input: string,
     period?: Period,
     interval?: Interval,

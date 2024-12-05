@@ -1,4 +1,4 @@
-import { investing, getHistoricalData } from '../src/index';
+import investing, { getHistoricalData } from '../src/index';
 
 describe('Tests for Investing.com unofficial APIs', () => {
   describe('investing API', () => {

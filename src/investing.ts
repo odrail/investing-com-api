@@ -76,6 +76,7 @@ async function callInvesting(pairId: PairId, period: Period, interval: Interval,
  */
 
 const investing = async(pairId?: string, period: Period = 'P1M', interval: Interval = 'P1D', pointscount: PointsCount = 120): Promise<InvestmentData[]> => {
+  console.warn('This method is deprecated. Use getHistoricalData() instead')
   checkParams(pairId, period, interval, pointscount);
   const resInvesting = await callInvesting(pairId, period, interval, pointscount);
   const results = mapResponse(resInvesting);
