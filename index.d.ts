@@ -2,7 +2,7 @@ declare module "investing-com-api" {
 
   export interface GetHistoricalDataParams {
     input: string,
-    resolution?: '5' | '60' | 'D' | 'W' | 'M',
+    resolution?: '5' | '15' | '60' | '300' | 'D' | 'W' | 'M',
     from: Date,
     to: Date
   }
