@@ -8,9 +8,6 @@ declare module "investing-com-api" {
   }
 
   export type PairId = string
-  export type Period = 'P1D' | 'P1W' | 'P1M' | 'P3M' | 'P6M' | 'P1Y' | 'P5Y' | 'MAX'
-  export type Interval = 'PT1M' | 'PT5M' | 'PT15M' | 'PT30M' | 'PT1H' | 'PT5H' | 'P1D' | 'P1W' | 'P1M'
-  export type PointsCount = 60 | 70 | 120
   export type ChartResponse = [number, number, number, number, number, number]
   export type GetHistoricalDataFn = (params: GetHistoricalDataParams) => Promise<InvestmentData[]>
 
@@ -37,23 +34,6 @@ declare module "investing-com-api" {
   } 
   | { s: "no_data", nextTime: number }
   | string[]
-
-  /**
-   * Fetches historical data for a specified trading pair.
-   * 
-   * @param input - The trading pair identifier.
-   * @param period - The period for which to fetch the data (optional).
-   * @param interval - The time interval for the data points (optional).
-   * @param pointscount - The number of data points to retrieve (optional).
-   * @param pptrLaunchOptions - Options for launching Puppeteer (optional).
-   * @returns A promise that resolves to an array of historical data points.
-   */
-  export default function investing(
-    input: string,
-    period?: Period,
-    interval?: Interval,
-    pointscount?: PointsCount,
-  ): Promise<InvestmentData>;
 
   export function getHistoricalData(
     params: GetHistoricalDataParams
