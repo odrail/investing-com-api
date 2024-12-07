@@ -1,5 +1,5 @@
 # Investing.com Unofficial APIs
-[![](https://github.com/davideviolante/investing-com-api/workflows/Node.js%20CI/badge.svg)](https://github.com/DavideViolante/investing-com-api/actions?query=workflow%3A"Node.js+CI") [![Coverage Status](https://coveralls.io/repos/github/DavideViolante/investing-com-api/badge.svg?branch=master)](https://coveralls.io/github/DavideViolante/investing-com-api?branch=master) [![Maintainability](https://api.codeclimate.com/v1/badges/ce48adbd97ff85557918/maintainability)](https://codeclimate.com/github/DavideViolante/investing-com-api/maintainability) ![npm](https://img.shields.io/npm/dm/investing-com-api)  [![Donate](https://img.shields.io/badge/paypal-donate-179BD7.svg)](https://www.paypal.me/dviolante)
+[![](https://github.com/davideviolante/investing-com-api/workflows/Node.js%20CI/badge.svg)](https://github.com/DavideViolante/investing-com-api/actions?query=workflow%3A"Node.js+CI") [![Coverage Status](https://coveralls.io/repos/github/DavideViolante/investing-com-api/badge.svg?branch=master)](https://coveralls.io/github/DavideViolante/investing-com-api?branch=master) [![Maintainability](https://api.codeclimate.com/v1/badges/ce48adbd97ff85557918/maintainability)](https://codeclimate.com/github/DavideViolante/investing-com-api/maintainability) ![npm](https://img.shields.io/npm/dm/investing-com-api)
 
 [![NPM](https://nodei.co/npm/investing-com-api.png)](https://nodei.co/npm/investing-com-api/)
 
@@ -10,15 +10,12 @@ Unofficial APIs for Investing.com website.
 
 ### Example
 ```js
-const { investing, getHistoricalData } = require('investing-com-api');
+import { getHistoricalData } = from 'investing-com-api'
 
 async function main() {
   try {
-    const response1 = await investing('currencies/eur-usd'); // Providing a valid mapping.js key
-    const response2 = await investing('currencies/eur-usd', 'P1M', 'P1D'); // With optional params
-    const response3 = await investing('1'); // Providing the pairId directly, even if not present in mapping.js
-    const response4 = await getHistoricalData({
-      input: '1',
+    const historicalData= await getHistoricalData({
+      input: '46925',
       resolution: 'D',
       from: new Date('2024-10-15T00:00:00.000Z'),
       to: new Date('2024-10-22T00:00:00.000Z'),
@@ -34,7 +31,6 @@ async function main() {
 [
   {
     date: 1659398400000,
-    value: 1.0157,
     price_open: 1.0264,
     price_high: 1.0294,
     price_low: 1.0155,
@@ -43,7 +39,6 @@ async function main() {
   },
   {
     date: 1659484800000,
-    value: 1.0136,
     price_open: 1.0158,
     price_high: 1.0209,
     price_low: 1.0126,
@@ -56,18 +51,19 @@ async function main() {
 
 
 ### Inputs
-#### investing API
-Only input is required, other params are optional.
-- **input** _String_: input string, see [mapping.js](https://github.com/DavideViolante/investing-com-api/blob/master/mapping.js) keys, or provide a valid investing.com pairId. (Required)
-- **period** _String_: Period of time, window size. Default P1M (1 month). Valid values: P1D, P1W, P1M, P3M, P6M, P1Y, P5Y, MAX.
-- **interval** _Number_: Interval between results. Default P1D (1 day). Valid values: PT1M, PT5M, PT15M, PT30M, PT1H, PT5H, P1D, P1W, P1M.
-- **pointscount** _Number_: number of total results. Valid values seems to be 60, 70 or 120.
 
 #### getHistoricalData API
 Not all parameters are mandatory.
 
-- **input** String: input string, see mapping.js keys, or provide a valid investing.com pairId. (Required)
-- **resolution** String: resolution of the response. Default D (1 day). Valid values: 5 (5 minutes), 60 (1 hour), D (1 day), W (week), M (month)
+- **input** String: input string, provide a valid investing.com pairId. (Required)
+- **resolution** String: resolution of the response.
+  - Valid values: 
+    - `5` (5 minutes)
+    - `60` (1 hour)
+    - `300` (5 hours)
+    - `D` (1 day, **Default**)
+    - `W` (week)
+    - `M` (month)
 - **from** Date: a Date object to indicate the start of the period (Required)
 - **to** Date: a Date object to indicate the end of the period (Required)
 
@@ -77,8 +73,5 @@ Not all parameters are mandatory.
 ### Run lint
 `npm run lint`
 
-### Contribute
-PRs are welcome to add more elements to the [mapping.js](https://github.com/DavideViolante/investing-com-api/blob/master/mapping.js) file.
-
-### Author
+### Thanks to
 - [Davide Violante](https://github.com/DavideViolante/)
