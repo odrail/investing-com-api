@@ -1,5 +1,5 @@
 import { ChartResponse, GetHistoricalDataFn, GetHistoricalDataParams, GetHistoricalDataResponse, InvestmentData } from 'investing-com-api';
-import mapResponse from './mapResponse';
+import mapResponse from '../utils/mapGetHistoricalDataResponse';
 
 const buildUrl = ({ input, resolution = 'D', from, to }: GetHistoricalDataParams): string => {
   const query = new URLSearchParams({
