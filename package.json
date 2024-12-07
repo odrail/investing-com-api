@@ -1,6 +1,6 @@
 {
   "name": "investing-com-api",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Unofficial APIs for Investing.com website.",
   "main": "dist/bundle.min.cjs",
   "type": "module",
