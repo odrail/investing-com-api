@@ -5,16 +5,46 @@
 
 Unofficial APIs for Investing.com website.
 
-### Install
+## Install
 `npm i investing-com-api`
 
-### Example
+## APIs
+
+### getHistoricalData
+Not all parameters are mandatory.
+
+#### Input params
+- **params** Object (required)
+  - **input** String: input string, provide a valid investing.com pairId. (Required)
+  - **resolution** String: resolution of the response.
+    - Valid values: 
+      - `'5'` (5 minutes)
+      - `'60'` (1 hour)
+      - `'300'` (5 hours)
+      - `'D'` (1 day, **Default**)
+      - `'W'` (week)
+      - `'M'` (month)
+  - **from** Date: a Date object to indicate the start of the period (Required)
+  - **to** Date: a Date object to indicate the end of the period (Required)
+
+#### Output
+```js
+{
+  date: number;        // Timestamp of the data point
+  price_open: number;  // Opening price
+  price_high: number;  // Highest price during the period
+  price_low: number;   // Lowest price during the period
+  price_close: number; // Closing price
+}[]
+```
+
+#### Example
 ```js
 import { getHistoricalData } = from 'investing-com-api'
 
 async function main() {
   try {
-    const historicalData= await getHistoricalData({
+    const historicalData = await getHistoricalData({
       input: '46925',
       resolution: 'D',
       from: new Date('2024-10-15T00:00:00.000Z'),
@@ -26,7 +56,7 @@ async function main() {
 }
 ```
 
-### Response
+Response
 ```js
 [
   {
@@ -49,29 +79,11 @@ async function main() {
 ]
 ```
 
-
-### Inputs
-
-#### getHistoricalData API
-Not all parameters are mandatory.
-
-- **input** String: input string, provide a valid investing.com pairId. (Required)
-- **resolution** String: resolution of the response.
-  - Valid values: 
-    - `5` (5 minutes)
-    - `60` (1 hour)
-    - `300` (5 hours)
-    - `D` (1 day, **Default**)
-    - `W` (week)
-    - `M` (month)
-- **from** Date: a Date object to indicate the start of the period (Required)
-- **to** Date: a Date object to indicate the end of the period (Required)
-
-### Run tests
+## Run tests
 `npm test`
 
-### Run lint
+## Run lint
 `npm run lint`
 
-### Thanks to
+## Thanks to
 - [Davide Violante](https://github.com/DavideViolante/)
