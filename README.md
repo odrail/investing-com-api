@@ -8,6 +8,10 @@ Unofficial APIs for Investing.com website.
 ## Install
 `npm i investing-com-api`
 
+## Documentation
+
+Visit https://odrail.github.io/investing-com-api
+
 ## APIs
 
 ### getHistoricalData
