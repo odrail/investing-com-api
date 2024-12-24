@@ -72,7 +72,7 @@ const getSessionId = (): string => {
  * 
  * @example
  * ```ts
- * import { RealTimeData } from "investing-com-api";
+ * import { RealTimeData, PidInfo } from "investing-com-api";
  * const realTimeData = new RealTimeData();
  * realTimeData.on(RealTimeData.ON_OPEN, () => {
  *    realTimeData.subscribe([1057391]);
