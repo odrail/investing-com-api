@@ -1,4 +1,4 @@
-import getHistoricalData from "../src/getHistoricalData";
+import getHistoricalData from "../src/api/getHistoricalData";
 import nock from 'nock'
 
 describe('Tests for getHistoricalData()', () => {
