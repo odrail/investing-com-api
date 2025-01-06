@@ -1,9 +1,9 @@
 import { ChartResponse, GetHistoricalDataFn, GetHistoricalDataParams, GetHistoricalDataResponse, Resolution } from 'investing-com-api';
 import mapResponse from '../utils/mapGetHistoricalDataResponse';
 
-const buildUrl = ({ input, resolution = Resolution.DAILY, from, to }: GetHistoricalDataParams): string => {
+const buildUrl = ({ pairId, resolution = Resolution.DAILY, from, to }: GetHistoricalDataParams): string => {
   const query = new URLSearchParams({
-    symbol: input,
+    symbol: pairId.toString(),
     resolution,
     from: from && Math.round(from.getTime() / 1000).toString(),
     to: to && Math.round(to.getTime() / 1000).toString(),

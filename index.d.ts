@@ -11,13 +11,13 @@ declare module "investing-com-api" {
   }
 
   export interface GetHistoricalDataParams {
-    input: string,
-    resolution?: Resolution,// | string, // @deprecate string
+    pairId: PairId,
+    resolution?: Resolution,
     from: Date,
     to: Date
   }
 
-  export type PairId = string
+  export type PairId = number
   export type ChartResponse = [number, number, number, number, number, number]
   export type GetHistoricalDataFn = (params: GetHistoricalDataParams) => Promise<InvestmentData[]>
 

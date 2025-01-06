@@ -111,7 +111,7 @@ import { getHistoricalData, Resolution } = from 'investing-com-api'
 async function main() {
   try {
     const historicalData = await getHistoricalData({
-      input: '46925',
+      pairId: 46925,
       resolution: Resolution.DAILY,
       from: new Date('2024-10-15T00:00:00.000Z'),
       to: new Date('2024-10-22T00:00:00.000Z'),

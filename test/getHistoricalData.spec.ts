@@ -15,7 +15,7 @@ describe('Tests for getHistoricalData()', () => {
         .query(true)
         .reply(200, { s: 'ok', t: [] });
     await expect(getHistoricalData({
-      input: '1',
+      pairId: 1,
       resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
@@ -28,7 +28,7 @@ describe('Tests for getHistoricalData()', () => {
         .query(true)
         .reply(403);
     await expect(getHistoricalData({
-      input: '1',
+      pairId: 1,
       resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
@@ -41,7 +41,7 @@ describe('Tests for getHistoricalData()', () => {
         .query(true)
         .reply(200, [ 'to field is required', 'to field must be an integer' ] );
     await expect(getHistoricalData({
-      input: '1',
+      pairId: 1,
       resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
@@ -54,7 +54,7 @@ describe('Tests for getHistoricalData()', () => {
         .query(true)
         .reply(200, { s: 'no_data', nextTime: 0 } );
     await expect(getHistoricalData({
-      input: '1',
+      pairId: 1,
       resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
@@ -67,7 +67,7 @@ describe('Tests for getHistoricalData()', () => {
         .query(true)
         .reply(200, { s: 'ok', t: [] });
     await getHistoricalData({
-      input: '1',
+      pairId: 1,
       resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
@@ -121,7 +121,7 @@ describe('Tests for getHistoricalData()', () => {
         });
 
     const data = await getHistoricalData({
-      input: '1',
+      pairId: 1,
       resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
@@ -186,7 +186,7 @@ describe('Tests for getHistoricalData()', () => {
         });
 
     const data = await getHistoricalData({
-      input: '1',
+      pairId: 1,
       resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
@@ -243,7 +243,7 @@ describe('Tests for getHistoricalData()', () => {
         });
 
     const data = await getHistoricalData({
-      input: '1',
+      pairId: 1,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
     });
