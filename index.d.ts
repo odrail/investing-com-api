@@ -39,13 +39,6 @@ declare module "investing-com-api" {
     params: GetHistoricalDataParams
   ): Promise<InvestmentData[]>;
 
-  export type SearchQuoteOptions = {
-    filter?: {
-      type?: string
-      exchanges?: string[]
-    }
-  }
-
   export type SearchQuoteResponse = {
     pairId:      number;
     url:         string;
@@ -56,5 +49,5 @@ declare module "investing-com-api" {
     type:        string;
   }
 
-  export function searchQuotes(search: string, options?: SearchQuoteOptions): Promise<SearchQuoteResponse[]>
+  export function searchQuotes(search: string): Promise<SearchQuoteResponse[]>
 }

@@ -1,4 +1,4 @@
-import { SearchQuoteOptions, SearchQuoteResponse } from "investing-com-api"
+import { SearchQuoteResponse } from "investing-com-api"
 
 type Quote = {
     id: number;
@@ -24,23 +24,14 @@ const mapQuote = (quote: Quote): SearchQuoteResponse => ({
     url: quote.url
 })
 
-const applyFilters = (quote: Quote, options?: SearchQuoteOptions): boolean => {
-    if (!options) return true
-    if (options.filter.type) {
-        if (!quote.type.includes(options.filter.type)) return false
-    }
-    if (options.filter.exchanges) {
-        if (!options.filter.exchanges.includes(quote.exchange)) return false
-    }
-    return true
-}
-
-const searchQuotes = async (search: string, options?: SearchQuoteOptions): Promise<SearchQuoteResponse[]> => {
-    const response = await fetch(`https://api.investing.com/api/search/v2/search?q=${search}`)
+const searchQuotes = async (search: string): Promise<SearchQuoteResponse[]> => {
+    const qs = new URLSearchParams({
+        q: search,
+    })
+    const response = await fetch(`https://api.investing.com/api/search/v2/search?${qs.toString()}`)
     if (!response.ok) return Promise.reject(`Response status: ${response.status}`);
     const body = await response.json() as SearchDataResponse
     return body.quotes
-        .filter(quote => applyFilters(quote, options))
         .map(mapQuote)
 }
 
