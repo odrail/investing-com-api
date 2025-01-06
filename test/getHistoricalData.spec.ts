@@ -1,3 +1,4 @@
+import { Resolution } from "investing-com-api";
 import getHistoricalData from "../src/api/getHistoricalData";
 import nock from 'nock'
 
@@ -15,7 +16,7 @@ describe('Tests for getHistoricalData()', () => {
         .reply(200, { s: 'ok', t: [] });
     await expect(getHistoricalData({
       input: '1',
-      resolution: 'D',
+      resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
     })).resolves.toEqual([]);
@@ -28,7 +29,7 @@ describe('Tests for getHistoricalData()', () => {
         .reply(403);
     await expect(getHistoricalData({
       input: '1',
-      resolution: 'D',
+      resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
     })).rejects.toEqual('Response status: 403');
@@ -41,7 +42,7 @@ describe('Tests for getHistoricalData()', () => {
         .reply(200, [ 'to field is required', 'to field must be an integer' ] );
     await expect(getHistoricalData({
       input: '1',
-      resolution: 'D',
+      resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
     })).rejects.toEqual(["to field is required", "to field must be an integer"]);
@@ -54,7 +55,7 @@ describe('Tests for getHistoricalData()', () => {
         .reply(200, { s: 'no_data', nextTime: 0 } );
     await expect(getHistoricalData({
       input: '1',
-      resolution: 'D',
+      resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
     })).rejects.toEqual({"nextTime": 0, "s": "no_data"});
@@ -67,7 +68,7 @@ describe('Tests for getHistoricalData()', () => {
         .reply(200, { s: 'ok', t: [] });
     await getHistoricalData({
       input: '1',
-      resolution: 'D',
+      resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
     });
@@ -79,7 +80,7 @@ describe('Tests for getHistoricalData()', () => {
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query({
           symbol: '1',
-          resolution: 'D',
+          resolution: Resolution.DAILY,
           from: 1729123200,
           to: 1729209600,
         })
@@ -121,7 +122,7 @@ describe('Tests for getHistoricalData()', () => {
 
     const data = await getHistoricalData({
       input: '1',
-      resolution: 'D',
+      resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
     });
@@ -152,7 +153,7 @@ describe('Tests for getHistoricalData()', () => {
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query({
           symbol: '1',
-          resolution: 'D',
+          resolution: Resolution.DAILY,
           from: 1729123200,
           to: 1729209600,
         })
@@ -186,7 +187,7 @@ describe('Tests for getHistoricalData()', () => {
 
     const data = await getHistoricalData({
       input: '1',
-      resolution: 'D',
+      resolution: Resolution.DAILY,
       from: new Date(1729123200000),
       to: new Date(1729209600000),
     });
@@ -209,7 +210,7 @@ describe('Tests for getHistoricalData()', () => {
         .get('/d8f62270e64f9eb6e4e6a07c3ffeab0b/1729428526/9/9/16/history')
         .query({
           symbol: '1',
-          resolution: 'D',
+          resolution: Resolution.DAILY,
           from: 1729123200,
           to: 1729209600,
         })
