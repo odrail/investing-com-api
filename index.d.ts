@@ -1,13 +1,23 @@
 declare module "investing-com-api" {
 
+  export const enum Resolution {
+    FIVE_MINUTES = '5',
+    FIFTEEN_MINUTES = '15',
+    HOURLY = '60',
+    FIVE_HOUR = '300',
+    DAILY = 'D',
+    WEEKLY = 'W',
+    MONTHLY = 'M'
+  }
+
   export interface GetHistoricalDataParams {
-    input: string,
-    resolution?: '5' | '15' | '60' | '300' | 'D' | 'W' | 'M',
+    pairId: PairId,
+    resolution?: Resolution,
     from: Date,
     to: Date
   }
 
-  export type PairId = string
+  export type PairId = number
   export type ChartResponse = [number, number, number, number, number, number]
   export type GetHistoricalDataFn = (params: GetHistoricalDataParams) => Promise<InvestmentData[]>
 
