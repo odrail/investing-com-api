@@ -1,5 +1,5 @@
 import { ChartResponse } from "investing-com-api";
-import mapResponse from "../src/mapResponse";
+import mapResponse from "../src/utils/mapGetHistoricalDataResponse";
 
 describe('TEST mapResponse', () => {
     const mockData: ChartResponse[] = [

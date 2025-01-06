@@ -14,6 +14,72 @@ Visit https://odrail.github.io/investing-com-api
 
 ## APIs
 
+### searchQuotes
+
+Use this API to retrieve the `pairId` of the asset of your interest.
+
+#### Input params
+- **search** String: input string. It can be ISIN, name or anything else
+
+#### Output
+
+```js
+  {
+    pairId:      number;
+    url:         string;
+    description: string;
+    symbol:      string;
+    exchange:    string;
+    flag:        string;
+    type:        string;
+  }[]
+```
+
+#### Example
+```js
+import { searchQuotes } from 'investing-com-api'
+
+async function main() {
+  try {
+    const resultSearchQuotes = await searchQuotes('SWDA')
+    console.log(resultSearchQuotes)
+    /* 
+    [
+        {
+            "pairId": 995448,
+            "url": "/etfs/ishares-msci-world---acc?cid=995448",
+            "description": "iShares Core MSCI World UCITS ETF USD (Acc)",
+            "symbol": "SWDA",
+            "exchange": "Switzerland",
+            "flag": "Switzerland",
+            "type": "ETF - Switzerland"
+        },
+        {
+            "pairId": 995447,
+            "url": "/etfs/ishares-msci-world---acc?cid=995447",
+            "description": "iShares Core MSCI World UCITS ETF USD (Acc)",
+            "symbol": "SWDA",
+            "exchange": "London",
+            "flag": "UK",
+            "type": "ETF - London"
+        },
+        {
+            "pairId": 46925,
+            "url": "/etfs/ishares-msci-world---acc?cid=46925",
+            "description": "iShares Core MSCI World UCITS ETF USD (Acc)",
+            "symbol": "SWDA",
+            "exchange": "Milan",
+            "flag": "Italy",
+            "type": "ETF - Milan"
+        }
+    ]
+    */
+  } catch (err) {
+    console.error(err);
+  }
+}
+```
+
 ### getHistoricalData
 Not all parameters are mandatory.
 
@@ -80,6 +146,74 @@ Response
     volume: 15
   },
   ...
+]
+```
+
+### searchQuotes
+
+#### Input params
+- **search** String (required)
+- **options** Object (optional)
+  - **filters** Object (optional)
+    - **type** String (optional)
+    - **exchange** Array of Strings (optional)
+
+#### Output
+```js
+{ 
+  pairId:      number;
+  url:         string;
+  description: string;
+  symbol:      string;
+  exchange:    string;
+  flag:        string;
+  type:        string;
+}[]
+```
+
+#### Example
+```js
+import { searchQuotes } = from 'investing-com-api'
+
+async function main() {
+  try {
+    const quotes = await searchQuotes('SWDA')
+  } catch (err) {
+    console.error(err);
+  }
+}
+```
+
+Response
+```js
+[
+    {
+        pairId: 995448,
+        url: "/etfs/ishares-msci-world---acc?cid=995448",
+        description: "iShares Core MSCI World UCITS ETF USD (Acc)",
+        symbol: "SWDA",
+        exchange: "Switzerland",
+        flag: "Switzerland",
+        type: "ETF - Switzerland"
+    },
+    {
+        pairId: 995447,
+        url: "/etfs/ishares-msci-world---acc?cid=995447",
+        description: "iShares Core MSCI World UCITS ETF USD (Acc)",
+        symbol: "SWDA",
+        exchange: "London",
+        flag: "UK",
+        type: "ETF - London"
+    },
+    {
+        pairId: 46925,
+        url: "/etfs/ishares-msci-world---acc?cid=46925",
+        description: "iShares Core MSCI World UCITS ETF USD (Acc)",
+        symbol: "SWDA",
+        exchange: "Milan",
+        flag: "Italy",
+        type: "ETF - Milan"
+    }
 ]
 ```
 
