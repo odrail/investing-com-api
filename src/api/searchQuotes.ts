@@ -24,6 +24,24 @@ const mapQuote = (quote: Quote): SearchQuoteResponse => ({
     url: quote.url
 })
 
+/**
+ * A class that allows you to receive real-time data from the ForexPro websocket (used by `investing.com`).
+ * 
+ * @example
+ * ```js
+ * import { searchQuotes } from 'investing-com-api'
+ * 
+ * async function main() {
+ *   try {
+ *     const resultSearchQuotes = await searchQuotes('SWDA')
+ * } catch (err) {
+ *     console.error(err);
+ *   }
+ * }
+ * ```
+ * @beta
+ * 
+ * */
 const searchQuotes = async (search: string): Promise<SearchQuoteResponse[]> => {
     const qs = new URLSearchParams({
         q: search,
