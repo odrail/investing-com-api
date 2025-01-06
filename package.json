@@ -9,7 +9,7 @@
     "lint": "eslint ./src",
     "test": "jest",
     "coverage": "jest --coverage",
-    "build": "rimraf dist && rollup --config",
+    "build": "rimraf dist && rollup --config && npm run docs",
     "prepublishOnly": "npm run build",
     "docs": "typedoc --out docs src"
   },
